@@ -1,5 +1,5 @@
 
-const ETH_DAI_ADDR = "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11";
+/*const ETH_DAI_ADDR = "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11";
 const ETH_DAI_NAME = "ETH/DAI";
 
 const USDC_USDT_ADDR = "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f";
@@ -61,4 +61,28 @@ const mainHTTP = async () => {
     }
 };
 
+mainHTTP();
+*/
+const blk = require("./blockchain");
+const { ChainId, Fetcher, WETH, Route, Trade, TokenAmount, TradeType } = require ('@uniswap/sdk');
+const ethers = require('ethers');  
+
+const url = blk.HTTP_URL;
+const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+
+const chainId = ChainId.MAINNET;
+const tokenAddress = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+
+
+
+const mainHTTP = async () => {
+
+    const dai = await Fetcher.fetchTokenData(chainId, tokenAddress, customHttpProvider);
+	const weth = WETH[chainId];
+	const pair = await Fetcher.fetchPairData(dai, weth, customHttpProvider);
+	const route = new Route([pair], weth);
+	console.log("Mid Price WETH --> DAI:", route.midPrice.toSignificant(6));
+	console.log("Mid Price DAI --> WETH:", route.midPrice.invert().toSignificant(6));
+
+};
 mainHTTP();
