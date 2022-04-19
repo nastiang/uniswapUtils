@@ -49,7 +49,7 @@ const mainWSS = async () => {
    
     [state.token0, state.token1] = await getReserves(EthDaiContractWSS);
     state.blockNumber = await blk.web3http.eth.getBlockNumber();
-    PairContractWSS.events.Sync({}).on("data", (data) => updateState(data));
+    EthDaiContractWSS.events.Sync({}).on("data", (data) => updateState(data));
     console.log(
         `${state.blockNumber} Price ${ETH_DAI_NAME} : ${state.token0
             .div(state.token1)
@@ -58,7 +58,7 @@ const mainWSS = async () => {
 
     [state.token0, state.token1] = await getReserves(UsdcUsdtContractWSS);
     state.blockNumber = await blk.web3http.eth.getBlockNumber();
-    PairContractWSS.events.Sync({}).on("data", (data) => updateState(data));
+    UsdcUsdtContractWSS.events.Sync({}).on("data", (data) => updateState(data));
     console.log(
         `${state.blockNumber} Price ${USDC_USDT_NAME} : ${state.token0
             .div(state.token1)
@@ -67,7 +67,7 @@ const mainWSS = async () => {
 
     [state.token0, state.token1] = await getReserves(EthUsdtContractWSS);
     state.blockNumber = await blk.web3http.eth.getBlockNumber();
-    PairContractWSS.events.Sync({}).on("data", (data) => updateState(data));
+    EthUsdtContractWSS.events.Sync({}).on("data", (data) => updateState(data));
     console.log(
         `${state.blockNumber} Price ${ETH_USDT_NAME} : ${state.token0
             .div(state.token1)
